@@ -1,7 +1,9 @@
 // import 'dart:_http';
+import 'dart:async';
 import 'dart:io';
 
 // import 'package:app_gasto_diario/services/eventos_config_service.dart';
+import 'package:asistencia_app/providers/loading_provider.dart';
 import 'package:asistencia_app/services/notifications_service.dart';
 import 'package:asistencia_app/share_preferences/preferences.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,9 @@ import 'package:asistencia_app/services/services.dart';
 import 'providers/ui_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'dart:isolate';
+import 'package:permission_handler/permission_handler.dart';
+
 void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +26,14 @@ void main() async {
 
   await Preferences.init();
 
+  await Permission.location.request();
+
+  await Future.delayed(Duration.zero);
+
   runApp( AppState() );
+
+  // Ejecutar el método en segundo plano
+  _runInBackground();
 }
 
 class AppState extends StatelessWidget {
@@ -34,6 +46,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: ( _ ) => AuthService()),
         ChangeNotifierProvider(create: ( _ ) => new UiProvider() ),
         ChangeNotifierProvider(create: ( _ ) => AsistenciaService()),
+        ChangeNotifierProvider(create: ( _ ) => LoadingProvider()),
       ],
       child: MyApp(),
     );
@@ -61,7 +74,7 @@ class MyApp extends StatelessWidget {
 
         'home': ( _ ) => HomeScreen(),
         'asistencia': ( _ ) => AsistenciaSreen(),
-        'img': ( _ ) => ImgScreen(imagePath: "",title: "",type: 0,),
+        // 'img': ( _ ) => ImgScreen(imagePath: "",title: "",type: 0,),
 
         'login': ( _ ) => LoginScreen(),
       },
@@ -117,3 +130,27 @@ class MyHttpOverrides extends HttpOverrides{
       ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }
+
+void _runInBackground() {
+  // Crea un nuevo `Isolate`
+  Isolate.spawn(_backgroundFunction, 'Hola desde el fondo');
+}
+
+void _backgroundFunction(dynamic message) {
+  // Este es el código que se ejecuta en segundo plano
+  // print('Mensaje recibido en segundo plano: $message');
+  Timer.periodic(Duration(seconds: 5), (timer) {
+    // Este es el código que se ejecuta cada segundo en segundo plano
+    print('Ejecutando cada segundo en segundo plano');
+    // _requestLocationPermission();
+  });
+}
+
+// void _requestLocationPermission() async {
+//   var status = await Permission.location.request();
+//   if (status.isGranted) {
+//     print('Permisos de ubicación concedidos');
+//   } else {
+//     print('Permisos de ubicación denegados');
+//   }
+// }

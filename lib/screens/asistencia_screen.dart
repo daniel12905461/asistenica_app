@@ -34,6 +34,7 @@ class AsistenciaSreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
+          // automaticallyImplyLeading: false,
           centerTitle: true,
           title: Column(children: [
             Text(
@@ -67,7 +68,7 @@ class AsistenciaSreen extends StatelessWidget {
               elevation: 0,
               child: Icon(Icons.more_time),
               onPressed: () async {
-                _takePicture(context, 'Login', 2);
+                _takePicture(context, 'Reconocimiento facial', 2);
               },
             ),
           ),

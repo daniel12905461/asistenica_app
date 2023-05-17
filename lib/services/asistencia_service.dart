@@ -14,6 +14,8 @@ class AsistenciaService extends ChangeNotifier {
 
   final enviromentProvider = new EnviromentProvider();
 
+  final loading = true;
+
   Future<String> registrarAsistencia( String imagePath, String name, int id) async {
 
     // final url = Uri.parse('http://'+enviromentProvider.baseUrl + enviromentProvider.baseUrlAux+'registrar');

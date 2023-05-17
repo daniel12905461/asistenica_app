@@ -33,7 +33,6 @@ class _HomePageBody extends StatelessWidget {
       case 0:
         return AsistenciaSreen();
 
-
       case 1:
         return ConfiguracionScreen();
 

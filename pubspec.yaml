@@ -42,6 +42,9 @@ dependencies:
   flutter_secure_storage:
   shared_preferences:
   image_picker:
+  socket_io_client:
+  flutter_isolate:
+  permission_handler:
 
 dev_dependencies:
   flutter_test:
