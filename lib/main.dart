@@ -17,6 +17,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'dart:isolate';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:geolocator/geolocator.dart';
 
 void main() async {
 
@@ -31,6 +32,14 @@ void main() async {
   await Future.delayed(Duration.zero);
 
   runApp( AppState() );
+
+  Position position = await Geolocator.getCurrentPosition(
+    desiredAccuracy: LocationAccuracy.high,
+  );
+
+  // Utiliza latitud y longitud como desees
+  print("Latitud: ${position.latitude}");
+  print("Longitud: ${position.longitude}");
 
   // Ejecutar el método en segundo plano
   _runInBackground();
@@ -47,6 +56,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: ( _ ) => new UiProvider() ),
         ChangeNotifierProvider(create: ( _ ) => AsistenciaService()),
         ChangeNotifierProvider(create: ( _ ) => LoadingProvider()),
+        ChangeNotifierProvider(create: ( _ ) => DiaService()),
       ],
       child: MyApp(),
     );
@@ -131,7 +141,8 @@ class MyHttpOverrides extends HttpOverrides{
   }
 }
 
-void _runInBackground() {
+Future<void> _runInBackground() async {
+
   // Crea un nuevo `Isolate`
   Isolate.spawn(_backgroundFunction, 'Hola desde el fondo');
 }
