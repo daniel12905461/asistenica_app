@@ -40,7 +40,7 @@ class DiaService extends ChangeNotifier {
     final url = Uri.parse(enviromentProvider.baseUrl+'dias/funcionario/'+id.toString());
 
 
-    // try {
+    try {
 
       final resp = await http.get( url,
         headers: {
@@ -58,15 +58,15 @@ class DiaService extends ChangeNotifier {
         this.dias.add( tempControl );
       }
 
-    // } on SocketException catch (error)  {
-    //   NotificationsService.showSnackbar( 'No hay conexión a Internet', 'warning');
-    // } on HttpException catch (error) {
-    //   NotificationsService.showSnackbar( 'Error! '+error.toString(), 'error');
-    // } on FormatException {
-    //   NotificationsService.showSnackbar( 'Error! Formato de respuesta incorrecto', 'error');
-    // } catch(error) {
-    //   NotificationsService.showSnackbar( 'Error! ocurrió un error', 'error');
-    // }
+    } on SocketException catch (error)  {
+      NotificationsService.showSnackbar( 'No hay conexión a Internet', 'warning');
+    } on HttpException catch (error) {
+      NotificationsService.showSnackbar( 'Error! '+error.toString(), 'error');
+    } on FormatException {
+      NotificationsService.showSnackbar( 'Error! Formato de respuesta incorrecto', 'error');
+    } catch(error) {
+      NotificationsService.showSnackbar( 'Error! ocurrió un error', 'error');
+    }
 
     this.isLoading = false;
     notifyListeners();
