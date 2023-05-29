@@ -46,6 +46,7 @@ dependencies:
   socket_io_client:
   flutter_isolate:
   permission_handler:
+  background_fetch:
 
 dev_dependencies:
   flutter_test:

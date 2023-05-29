@@ -6,7 +6,10 @@ import 'dart:io';
 import 'package:asistencia_app/providers/loading_provider.dart';
 import 'package:asistencia_app/services/notifications_service.dart';
 import 'package:asistencia_app/share_preferences/preferences.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_isolate/flutter_isolate.dart';
+// import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:provider/provider.dart';
 
 import 'package:asistencia_app/screens/screens.dart';
@@ -33,16 +36,8 @@ void main() async {
 
   runApp( AppState() );
 
-  Position position = await Geolocator.getCurrentPosition(
-    desiredAccuracy: LocationAccuracy.high,
-  );
-
-  // Utiliza latitud y longitud como desees
-  print("Latitud: ${position.latitude}");
-  print("Longitud: ${position.longitude}");
-
   // Ejecutar el método en segundo plano
-  _runInBackground();
+  // _runInBackground();
 }
 
 class AppState extends StatelessWidget {
@@ -140,28 +135,40 @@ class MyHttpOverrides extends HttpOverrides{
       ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }
+// void _runInBackground() {
+//   final ReceivePort receivePort = ReceivePort();
 
-Future<void> _runInBackground() async {
+//   // Crea el aislamiento
+//   Isolate.spawn(_backgroundTask, receivePort.sendPort);
 
-  // Crea un nuevo `Isolate`
-  Isolate.spawn(_backgroundFunction, 'Hola desde el fondo');
-}
+//   // Escucha los mensajes del aislamiento
+//   receivePort.listen((message) {
+//     if (message is String) {
+//       // Maneja los mensajes enviados desde el aislamiento
+//       print(message);
+//     }
+//   });
+// }
 
-void _backgroundFunction(dynamic message) {
-  // Este es el código que se ejecuta en segundo plano
-  // print('Mensaje recibido en segundo plano: $message');
-  Timer.periodic(Duration(seconds: 5), (timer) {
-    // Este es el código que se ejecuta cada segundo en segundo plano
-    print('Ejecutando cada segundo en segundo plano');
-    // _requestLocationPermission();
-  });
-}
+// void _backgroundTask(SendPort sendPort) async {
+//   Timer.periodic(Duration(seconds: 5), (timer) async {
+//     Position? position;
+//     try {
+//       bool servicioActivo = await Geolocator.isLocationServiceEnabled();
+//       if (servicioActivo) {
+//         position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+//       } else {
+//         // El servicio de ubicación está desactivado en el dispositivo
+//         // Puedes mostrar un mensaje o pedir al usuario que habilite la ubicación
+//       }
+//     } catch (e) {
+//       print('Error al obtener la ubicación en segundo plano: $e');
+//     }
+//     if (position != null) {
+//       final message = "Latitud: ${position.latitude}, Longitud: ${position.longitude}";
 
-// void _requestLocationPermission() async {
-//   var status = await Permission.location.request();
-//   if (status.isGranted) {
-//     print('Permisos de ubicación concedidos');
-//   } else {
-//     print('Permisos de ubicación denegados');
-//   }
+//       // Envía el mensaje al puerto de envío (sendPort) del aislamiento principal
+//       sendPort.send(message);
+//     }
+//   });
 // }

@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'dart:math';
 import 'package:asistencia_app/services/dia_service.dart';
 import 'package:asistencia_app/share_preferences/preferences.dart';
 import 'package:asistencia_app/widgets/dia_card.dart';
@@ -8,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:asistencia_app/screens/screens.dart';
 import 'package:provider/provider.dart';
-import 'package:asistencia_app/share_preferences/preferences.dart';
 
 class AsistenciaSreen extends StatelessWidget {
 
@@ -65,7 +62,7 @@ class AsistenciaSreen extends StatelessWidget {
         ),
         body: RefreshIndicator(
           onRefresh: () async {
-            diaService.listDia(Preferences.user.id);
+            diaService.listDia(Preferences.user.id!);
           },
           child: (!diaService.isLoading) ? ListView.builder(
             itemCount: diaService.dias.length,
@@ -99,10 +96,11 @@ class AsistenciaSreen extends StatelessWidget {
             child: Icon(Icons.more_time),
             onPressed: () async {
               _takePicture(context, 'Reconocimiento facial', 2);
+              // obtenerUbicacion();
             },
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       );
   }
 }

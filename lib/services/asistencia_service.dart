@@ -7,6 +7,7 @@ import 'package:asistencia_app/services/notifications_service.dart';
 // import 'package:asistencia_app/share_preferences/preferences.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:geolocator/geolocator.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -33,6 +34,8 @@ class AsistenciaService extends ChangeNotifier {
       resq.files.add(file);
       resq.fields['name'] = name;
       resq.fields['id'] = id.toString();
+      resq.fields['latitud'] = id.toString();
+      resq.fields['longitud'] = id.toString();
 
       var resp = await resq.send();
 
@@ -75,10 +78,26 @@ class AsistenciaService extends ChangeNotifier {
         url,
       );
 
+      double latitud = 0.0;
+      double longitud = 0.0;
+      bool servicioActivo = await Geolocator.isLocationServiceEnabled();
+      if (servicioActivo) {
+        Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+        latitud = position.latitude;
+        longitud = position.longitude;
+        // Aquí puedes hacer lo que necesites con las variables latitud y longitud
+        print('Latitud: $latitud, Longitud: $longitud');
+      } else {
+      //   // El servicio de ubicación está desactivado en el dispositivo
+      //   // Puedes mostrar un mensaje o pedir al usuario que habilite la ubicación
+      }
+
       final file = await http.MultipartFile.fromPath('image', imagePath);
       resq.files.add(file);
       resq.fields['name'] = name;
       resq.fields['id'] = id.toString();
+      resq.fields['latitud'] = latitud.toString();
+      resq.fields['longitud'] = longitud.toString();
 
       var resp = await resq.send();
 
@@ -86,7 +105,7 @@ class AsistenciaService extends ChangeNotifier {
 
       Map<String, dynamic> decodedResp = json.decode(responseBody);
 
-      if ( decodedResp['parecido'] ) {
+      if ( decodedResp['ok'] ) {
 
         NotificationsService.showSnackbar(decodedResp['mensaje'], 'success');
         returnAux = 'Si';
