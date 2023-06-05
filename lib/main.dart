@@ -1,5 +1,5 @@
 // import 'dart:_http';
-import 'dart:async';
+// import 'dart:async';
 import 'dart:io';
 
 // import 'package:app_gasto_diario/services/eventos_config_service.dart';
@@ -8,8 +8,6 @@ import 'package:asistencia_app/services/notifications_service.dart';
 import 'package:asistencia_app/share_preferences/preferences.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_isolate/flutter_isolate.dart';
-// import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:provider/provider.dart';
 
 import 'package:asistencia_app/screens/screens.dart';
@@ -18,9 +16,7 @@ import 'package:asistencia_app/services/services.dart';
 import 'providers/ui_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'dart:isolate';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:geolocator/geolocator.dart';
+// import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
 
@@ -30,14 +26,11 @@ void main() async {
 
   await Preferences.init();
 
-  await Permission.location.request();
+  // await Permission.location.request();
 
   await Future.delayed(Duration.zero);
 
   runApp( AppState() );
-
-  // Ejecutar el método en segundo plano
-  // _runInBackground();
 }
 
 class AppState extends StatelessWidget {
@@ -135,40 +128,3 @@ class MyHttpOverrides extends HttpOverrides{
       ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }
-// void _runInBackground() {
-//   final ReceivePort receivePort = ReceivePort();
-
-//   // Crea el aislamiento
-//   Isolate.spawn(_backgroundTask, receivePort.sendPort);
-
-//   // Escucha los mensajes del aislamiento
-//   receivePort.listen((message) {
-//     if (message is String) {
-//       // Maneja los mensajes enviados desde el aislamiento
-//       print(message);
-//     }
-//   });
-// }
-
-// void _backgroundTask(SendPort sendPort) async {
-//   Timer.periodic(Duration(seconds: 5), (timer) async {
-//     Position? position;
-//     try {
-//       bool servicioActivo = await Geolocator.isLocationServiceEnabled();
-//       if (servicioActivo) {
-//         position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-//       } else {
-//         // El servicio de ubicación está desactivado en el dispositivo
-//         // Puedes mostrar un mensaje o pedir al usuario que habilite la ubicación
-//       }
-//     } catch (e) {
-//       print('Error al obtener la ubicación en segundo plano: $e');
-//     }
-//     if (position != null) {
-//       final message = "Latitud: ${position.latitude}, Longitud: ${position.longitude}";
-
-//       // Envía el mensaje al puerto de envío (sendPort) del aislamiento principal
-//       sendPort.send(message);
-//     }
-//   });
-// }

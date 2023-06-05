@@ -44,9 +44,9 @@ dependencies:
   shared_preferences:
   image_picker:
   socket_io_client:
-  flutter_isolate:
+  # flutter_isolate:
   permission_handler:
-  background_fetch:
+  # background_fetch:
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,10 @@
+import 'dart:async';
+
+import 'package:asistencia_app/services/background_service.dart';
 import 'package:asistencia_app/services/dia_service.dart';
 import 'package:asistencia_app/share_preferences/preferences.dart';
 import 'package:asistencia_app/widgets/dia_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 // import 'package:camera/camera.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,6 +12,8 @@ import 'package:asistencia_app/screens/screens.dart';
 import 'package:provider/provider.dart';
 
 class AsistenciaSreen extends StatelessWidget {
+
+  final BackgroundService backgroundTask = BackgroundService();
 
   Future<void> _takePicture(BuildContext context, title, type) async {
     final picker = ImagePicker();
@@ -79,6 +85,29 @@ class AsistenciaSreen extends StatelessWidget {
                 // // monthsService.listaMeses();
                 // Loader.hide();
                 // Navigator.pushNamed(context, 'asistencia');
+
+                return showDialog(
+                  context: context,
+                  builder: (_) => CupertinoAlertDialog(
+                    title: Text('Desea registrar la Hora?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(false);
+                        },
+                        child: Text('Cancelar', style: TextStyle(color: Colors.red))
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          print(diaService.dias[index].fecha);
+                          _takePicture(context, 'Registrar Hora de Asistencia', 2);
+                          Navigator.of(context).pop(false);
+                        },
+                        child: Text('Aceptar')
+                      ),
+                    ],
+                  )
+                );
               },
               child: DiaCard(
                 dia: diaService.dias[index],
@@ -92,11 +121,11 @@ class AsistenciaSreen extends StatelessWidget {
         floatingActionButton: Visibility(
           visible: true,
           child: FloatingActionButton(
+            backgroundColor: Colors.lightBlue[800],
             elevation: 0,
             child: Icon(Icons.more_time),
             onPressed: () async {
-              _takePicture(context, 'Reconocimiento facial', 2);
-              // obtenerUbicacion();
+              _takePicture(context, 'Registrar Hora de Asistencia', 2);
             },
           ),
         ),
