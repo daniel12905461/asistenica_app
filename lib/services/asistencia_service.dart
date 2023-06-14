@@ -3,7 +3,9 @@ import 'dart:io';
 
 // import 'package:asistencia_app/models/models.dart';
 import 'package:asistencia_app/providers/enviroment_provider.dart';
+import 'package:asistencia_app/services/background_service.dart';
 import 'package:asistencia_app/services/notifications_service.dart';
+import 'package:asistencia_app/share_preferences/preferences.dart';
 // import 'package:asistencia_app/share_preferences/preferences.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -14,6 +16,7 @@ import 'package:http/http.dart' as http;
 class AsistenciaService extends ChangeNotifier {
 
   final enviromentProvider = new EnviromentProvider();
+  final backgroundService = new BackgroundService();
 
   final loading = true;
 
@@ -49,8 +52,10 @@ class AsistenciaService extends ChangeNotifier {
         returnAux = 'Si';
 
       } else {
+
         NotificationsService.showSnackbar( decodedResp['mensaje'], 'error');
         returnAux = 'No';
+
       }
 
     } on SocketException catch (error)  {
@@ -72,7 +77,7 @@ class AsistenciaService extends ChangeNotifier {
 
     String returnAux = 'No';
 
-    try {
+    // try {
       final resq = await http.MultipartRequest(
         'POST',
         url,
@@ -110,20 +115,30 @@ class AsistenciaService extends ChangeNotifier {
         NotificationsService.showSnackbar(decodedResp['mensaje'], 'success');
         returnAux = 'Si';
 
+        Preferences.idDia = decodedResp['dia']['id'].toString();
+
+        if(decodedResp['dia']['posicion'] == "1" || decodedResp['dia']['posicion'] == "3"){
+          // backgroundService.startLocationUpdates();
+          backgroundService.startIsolate();
+        }else{
+          // backgroundService.stopLocationUpdates();
+          backgroundService.stopIsolate();
+        }
+
       } else {
         NotificationsService.showSnackbar( decodedResp['mensaje'], 'error');
         returnAux = 'No';
       }
 
-    } on SocketException catch (error)  {
-      NotificationsService.showSnackbar( 'No hay conexión a Internet', 'warning');
-    } on HttpException catch (error) {
-      NotificationsService.showSnackbar( 'Error! '+error.toString(), 'error');
-    } on FormatException {
-      NotificationsService.showSnackbar( 'Error! Formato de respuesta incorrecto', 'error');
-    } catch(error) {
-      NotificationsService.showSnackbar( 'Error! ocurrió un error', 'error');
-    }
+    // } on SocketException catch (error)  {
+    //   NotificationsService.showSnackbar( 'No hay conexión a Internet', 'warning');
+    // } on HttpException catch (error) {
+    //   NotificationsService.showSnackbar( 'Error! '+error.toString(), 'error');
+    // } on FormatException {
+    //   NotificationsService.showSnackbar( 'Error! Formato de respuesta incorrecto', 'error');
+    // } catch(error) {
+    //   NotificationsService.showSnackbar( 'Error! ocurrió un error', 'error');
+    // }
 
     return returnAux;
   }

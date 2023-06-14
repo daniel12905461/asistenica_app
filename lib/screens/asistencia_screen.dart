@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:asistencia_app/providers/enviroment_provider.dart';
 import 'package:asistencia_app/services/background_service.dart';
 import 'package:asistencia_app/services/dia_service.dart';
 import 'package:asistencia_app/share_preferences/preferences.dart';
@@ -40,6 +41,7 @@ class AsistenciaSreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final diaService = Provider.of<DiaService>(context);
+    final enviromentProvider = new EnviromentProvider();
 
     return Scaffold(
         appBar: AppBar(
@@ -57,14 +59,33 @@ class AsistenciaSreen extends StatelessWidget {
               ),
             ),
           ],),
-          // actions: <Widget>[
-          //   IconButton(
-          //     icon: Icon(Icons.upload_file_outlined),
-          //     onPressed: () {
-          //       _takePicture(context, 'Registrar Imagen', 1);
-          //     },
-          //   ),
-          // ],
+          actions: <Widget>[
+            // IconButton(
+            //   icon: Icon(Icons.upload_file_outlined),
+            //   onPressed: () {
+            //     _takePicture(context, 'Registrar Imagen', 1);
+            //   },
+            // ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              child: CircleAvatar(
+                backgroundColor: Colors.grey[300],
+                child: ClipOval(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, 'perfil');
+                    },
+                    child: Image.network(
+                      enviromentProvider.baseUrl+'public/'+Preferences.user.id.toString()+'_'+Preferences.user.nombres.toString()+'.jpg',  // URL de la imagen
+                      width: 32,
+                      height: 32,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
         body: RefreshIndicator(
           onRefresh: () async {
@@ -99,7 +120,7 @@ class AsistenciaSreen extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () async {
-                          print(diaService.dias[index].fecha);
+                          // print(diaService.dias[index].fecha);
                           _takePicture(context, 'Registrar Hora de Asistencia', 2);
                           Navigator.of(context).pop(false);
                         },

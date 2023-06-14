@@ -181,7 +181,7 @@ class _DiaDetails extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
-                          horaFinReseso!,
+                          horaInicioReseso!,
                           style: TextStyle( fontSize: 17, fontWeight: FontWeight.w400),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -201,7 +201,7 @@ class _DiaDetails extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
-                          horaInicioReseso!,
+                          horaFinReseso!,
                           style: TextStyle( fontSize: 17, fontWeight: FontWeight.w400),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:asistencia_app/providers/loading_provider.dart';
 import 'package:asistencia_app/screens/asistencia_screen.dart';
+import 'package:asistencia_app/services/dia_service.dart';
 import 'package:asistencia_app/share_preferences/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:asistencia_app/services/asistencia_service.dart';
@@ -19,6 +20,7 @@ class ImgScreen extends StatelessWidget {
 
     final asistenciaService = Provider.of<AsistenciaService>(context);
     final loadingProvider = Provider.of<LoadingProvider>(context);
+    final diaService = Provider.of<DiaService>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -66,6 +68,8 @@ class ImgScreen extends StatelessWidget {
               }
 
               loadingProvider.isLoading = false;
+
+              diaService.listDia(Preferences.user.id!);
 
               Navigator.pushReplacementNamed(context, 'asistencia');
               // Navigator.pushReplacement(

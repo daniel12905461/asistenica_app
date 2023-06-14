@@ -31,6 +31,7 @@ void main() async {
   await Future.delayed(Duration.zero);
 
   runApp( AppState() );
+
 }
 
 class AppState extends StatelessWidget {
@@ -73,6 +74,7 @@ class MyApp extends StatelessWidget {
         'home': ( _ ) => HomeScreen(),
         'asistencia': ( _ ) => AsistenciaSreen(),
         // 'img': ( _ ) => ImgScreen(imagePath: "",title: "",type: 0,),
+        'perfil': ( _ ) => PerfilScreen(),
 
         'login': ( _ ) => LoginScreen(),
       },

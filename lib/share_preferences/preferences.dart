@@ -16,6 +16,8 @@ class Preferences {
 
   static List<String> _rolesItems = [];
 
+  static String _idDia = '';
+
   // static Setting _setting = new Setting();
 
   static Future init() async{
@@ -82,4 +84,14 @@ class Preferences {
   //   _setting = setting;
   //   _storage.setString('setting', jsonEncode(setting.toMap()));
   // }
+
+
+  static String get idDia {
+    return json.decode( _storage.getString('id_dia')! ).toString();
+  }
+
+  static set idDia(String idDia){
+    _idDia = idDia;
+    _storage.setString('id_dia', idDia);
+  }
 }
