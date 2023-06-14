@@ -118,11 +118,11 @@ class AsistenciaService extends ChangeNotifier {
         Preferences.idDia = decodedResp['dia']['id'].toString();
 
         if(decodedResp['dia']['posicion'] == "1" || decodedResp['dia']['posicion'] == "3"){
-          // backgroundService.startLocationUpdates();
-          backgroundService.startIsolate();
+          backgroundService.startLocationUpdates();
+          // backgroundService.startIsolate();
         }else{
-          // backgroundService.stopLocationUpdates();
-          backgroundService.stopIsolate();
+          backgroundService.stopLocationUpdates();
+          // backgroundService.stopIsolate();
         }
 
       } else {
