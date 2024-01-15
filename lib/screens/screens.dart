@@ -6,3 +6,4 @@ export 'package:asistencia_app/screens/asistencia_screen.dart';
 export 'package:asistencia_app/screens/img_screen.dart';
 export 'package:asistencia_app/screens/configuracion_screen.dart';
 export 'package:asistencia_app/screens/perfil_screen.dart';
+export 'package:asistencia_app/screens/solicitar_screen.dart';

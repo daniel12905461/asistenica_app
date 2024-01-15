@@ -75,6 +75,7 @@ class MyApp extends StatelessWidget {
         'asistencia': ( _ ) => AsistenciaSreen(),
         // 'img': ( _ ) => ImgScreen(imagePath: "",title: "",type: 0,),
         'perfil': ( _ ) => PerfilScreen(),
+        'solicitar': ( _ ) => SolicitarScreen(),
 
         'login': ( _ ) => LoginScreen(),
       },

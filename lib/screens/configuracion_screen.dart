@@ -86,11 +86,21 @@ class ConfiguracionScreen extends StatelessWidget {
               ListTile(
                 title: Text('Registrar Imagen'),
                 // subtitle: Text('cambiar la contraseña de su cuenta'),
-                leading: Icon(Icons.image),
+                leading: Icon(Icons.image_outlined),
                 trailing: Icon(Icons.keyboard_arrow_right_outlined),
                 onTap: (){
                   // print('sdfsdf');
                   _takePicture(context, 'Registrar Imagen', 1);
+                },
+              ),
+              ListTile(
+                title: Text('Solicitud de permiso'),
+                // subtitle: Text('cambiar la contraseña de su cuenta'),
+                leading: Icon(Icons.access_time_outlined),
+                trailing: Icon(Icons.keyboard_arrow_right_outlined),
+                onTap: (){
+                  // print('sdfsdf');
+                  Navigator.pushNamed(context, 'solicitar');
                 },
               )
             ])
