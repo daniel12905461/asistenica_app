@@ -5,6 +5,7 @@ import 'dart:io';
 // import 'package:app_gasto_diario/services/eventos_config_service.dart';
 import 'package:asistencia_app/providers/loading_provider.dart';
 import 'package:asistencia_app/services/notifications_service.dart';
+import 'package:asistencia_app/services/permiso_service.dart';
 import 'package:asistencia_app/share_preferences/preferences.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,7 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: ( _ ) => AsistenciaService()),
         ChangeNotifierProvider(create: ( _ ) => LoadingProvider()),
         ChangeNotifierProvider(create: ( _ ) => DiaService()),
+        ChangeNotifierProvider(create: ( _ ) => PermisoService()),
       ],
       child: MyApp(),
     );

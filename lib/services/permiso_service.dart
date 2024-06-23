@@ -22,7 +22,7 @@ class PermisoService extends ChangeNotifier {
 
     String returnAux = 'No';
 
-    try {
+    // try {
       final resq = await http.MultipartRequest(
         'POST',
         url,
@@ -37,6 +37,8 @@ class PermisoService extends ChangeNotifier {
 
       Map<String, dynamic> decodedResp = json.decode(responseBody);
 
+      print(decodedResp);
+
       if ( decodedResp['ok'] ) {
 
         NotificationsService.showSnackbar(decodedResp['mensaje'], 'success');
@@ -49,15 +51,15 @@ class PermisoService extends ChangeNotifier {
 
       }
 
-    } on SocketException catch (error)  {
-      NotificationsService.showSnackbar( 'No hay conexión a Internet', 'warning');
-    } on HttpException catch (error) {
-      NotificationsService.showSnackbar( 'Error! '+error.toString(), 'error');
-    } on FormatException {
-      NotificationsService.showSnackbar( 'Error! Formato de respuesta incorrecto', 'error');
-    } catch(error) {
-      NotificationsService.showSnackbar( 'Error! ocurrió un error', 'error');
-    }
+    // } on SocketException catch (error)  {
+    //   NotificationsService.showSnackbar( 'No hay conexión a Internet', 'warning');
+    // } on HttpException catch (error) {
+    //   NotificationsService.showSnackbar( 'Error! '+error.toString(), 'error');
+    // } on FormatException {
+    //   NotificationsService.showSnackbar( 'Error! Formato de respuesta incorrecto', 'error');
+    // } catch(error) {
+    //   NotificationsService.showSnackbar( 'Error! ocurrió un error', 'error');
+    // }
 
     return returnAux;
   }
