@@ -42,6 +42,8 @@ class DiaCard extends StatelessWidget {
               horaFinReseso: dia!.horaFinReseso,
               horaInicioReseso: dia!.horaInicioReseso,
               horaFin: dia!.horaFin,
+              estado: dia!.estado,
+              aprobado: dia!.aprobado,
             ),
 
           ],
@@ -59,6 +61,8 @@ class _DiaDetails extends StatelessWidget {
   final dynamic horaFinReseso;
   final dynamic horaInicioReseso;
   final dynamic horaFin;
+  final dynamic estado;
+  final dynamic aprobado;
 
   const _DiaDetails({
     this.nombre,
@@ -66,7 +70,9 @@ class _DiaDetails extends StatelessWidget {
     this.horaInicio,
     this.horaFinReseso,
     this.horaInicioReseso,
-    this.horaFin
+    this.horaFin,
+    this.estado,
+    this.aprobado
   });
 
   @override
@@ -106,7 +112,9 @@ class _DiaDetails extends StatelessWidget {
                     children:[
                       Icon(
                         Icons.circle,
-                        color: Colors.tealAccent[700],
+                        color: (estado == "Permiso") 
+                        ? (aprobado == true || aprobado == 1 ? Colors.tealAccent[700] : Colors.red[700])
+                        : Colors.tealAccent[700],
                       ),
                     ]
                   ),
@@ -139,99 +147,112 @@ class _DiaDetails extends StatelessWidget {
                 ])
               ]
             ),
-            Table(
-              columnWidths: {
-                0: FlexColumnWidth(1),
-                1: FlexColumnWidth(1),
-                2: FlexColumnWidth(1),
-                2: FlexColumnWidth(1),
-              },
-              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-              children: [
-                TableRow( children: [
-                  Container(
-                    padding: EdgeInsets.symmetric( horizontal: 0, vertical: 6 ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Hr. Entrada:',
-                          style: TextStyle( fontSize: 15, color: Colors.grey, fontWeight: FontWeight.bold),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                          horaInicio!,
-                          style: TextStyle( fontSize: 17, fontWeight: FontWeight.w400),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    ),
+            if (estado == "Permiso") 
+              Padding(
+                padding: EdgeInsets.only(top: 8.0),
+                child: Text(
+                  aprobado == true || aprobado == 1 ? "Permiso aprobado" : "Permiso pendiente",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: aprobado == true || aprobado == 1 ? Colors.tealAccent[700] : Colors.red[700],
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric( horizontal: 0, vertical: 6 ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Hr. Sal. Des.:',
-                          style: TextStyle( fontSize: 15, color: Colors.grey, fontWeight: FontWeight.bold),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                          horaInicioReseso!,
-                          style: TextStyle( fontSize: 17, fontWeight: FontWeight.w400),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                ),
+              )
+            else
+              Table(
+                columnWidths: {
+                  0: FlexColumnWidth(1),
+                  1: FlexColumnWidth(1),
+                  2: FlexColumnWidth(1),
+                  2: FlexColumnWidth(1),
+                },
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                children: [
+                  TableRow( children: [
+                    Container(
+                      padding: EdgeInsets.symmetric( horizontal: 0, vertical: 6 ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Hr. Entrada:',
+                            style: TextStyle( fontSize: 15, color: Colors.grey, fontWeight: FontWeight.bold),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            horaInicio!,
+                            style: TextStyle( fontSize: 17, fontWeight: FontWeight.w400),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric( horizontal: 0, vertical: 6 ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Hr. Ent. Des.:',
-                          style: TextStyle( fontSize: 15, color: Colors.grey, fontWeight: FontWeight.bold),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                          horaFinReseso!,
-                          style: TextStyle( fontSize: 17, fontWeight: FontWeight.w400),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                    Container(
+                      padding: EdgeInsets.symmetric( horizontal: 0, vertical: 6 ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Hr. Sal. Des.:',
+                            style: TextStyle( fontSize: 15, color: Colors.grey, fontWeight: FontWeight.bold),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            horaInicioReseso!,
+                            style: TextStyle( fontSize: 17, fontWeight: FontWeight.w400),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric( horizontal: 0, vertical: 6 ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Hr. Salida:',
-                          style: TextStyle( fontSize: 15, color: Colors.grey, fontWeight: FontWeight.bold),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        Text(
-                          horaFin!,
-                          style: TextStyle( fontSize: 17, fontWeight: FontWeight.w400),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
+                    Container(
+                      padding: EdgeInsets.symmetric( horizontal: 0, vertical: 6 ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Hr. Ent. Des.:',
+                            style: TextStyle( fontSize: 15, color: Colors.grey, fontWeight: FontWeight.bold),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            horaFinReseso!,
+                            style: TextStyle( fontSize: 17, fontWeight: FontWeight.w400),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ]),
-              ],
-            ),
+                    Container(
+                      padding: EdgeInsets.symmetric( horizontal: 0, vertical: 6 ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Hr. Salida:',
+                            style: TextStyle( fontSize: 15, color: Colors.grey, fontWeight: FontWeight.bold),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          Text(
+                            horaFin!,
+                            style: TextStyle( fontSize: 17, fontWeight: FontWeight.w400),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ]),
+                ],
+              ),
           ],
         )
 

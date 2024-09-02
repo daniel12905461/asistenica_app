@@ -10,10 +10,11 @@ class Dia {
         this.horaFinReseso,
         this.horaFin,
         this.idFuncionarios,
-        this.idMes
+        this.idMes,
+        this.aprobado
     });
 
-    String? id;
+    dynamic id;
     String? nombre;
     int? numero;
     dynamic estado;
@@ -24,6 +25,7 @@ class Dia {
     dynamic horaFin;
     dynamic idFuncionarios;
     dynamic idMes;
+    dynamic aprobado;
 
     factory Dia.fromMap(Map<String, dynamic> json) => Dia(
         id: json["id"],
@@ -36,7 +38,8 @@ class Dia {
         horaFinReseso: json["hora_fin_reseso"],
         horaFin: json["hora_fin"],
         idFuncionarios: json["id_funcionarios"],
-        idMes: json["id_mes"]
+        idMes: json["id_mes"],
+        aprobado: json["aprobado"]
     );
 
     Map<String, dynamic> toMap() => {
@@ -50,7 +53,8 @@ class Dia {
         "hora_fin_reseso": horaFinReseso,
         "hora_fin": horaFin,
         "id_funcionarios": idFuncionarios,
-        "id_mes": idMes
+        "id_mes": idMes,
+        "aprobado": aprobado
     };
 
 }

@@ -73,16 +73,16 @@ class ConfiguracionScreen extends StatelessWidget {
                   );
                 },
               ),
-              ListTile(
-                title: Text('Cambiar contraseña'),
-                // subtitle: Text('cambiar la contraseña de su cuenta'),
-                leading: Icon(Icons.lock_outline),
-                trailing: Icon(Icons.keyboard_arrow_right_outlined),
-                onTap: (){
-                  // print('sdfsdf');
-                  Navigator.pushNamed(context, 'change');
-                },
-              ),
+              // ListTile(
+              //   title: Text('Cambiar contraseña'),
+              //   // subtitle: Text('cambiar la contraseña de su cuenta'),
+              //   leading: Icon(Icons.lock_outline),
+              //   trailing: Icon(Icons.keyboard_arrow_right_outlined),
+              //   onTap: (){
+              //     // print('sdfsdf');
+              //     Navigator.pushNamed(context, 'change');
+              //   },
+              // ),
               ListTile(
                 title: Text('Registrar Imagen'),
                 // subtitle: Text('cambiar la contraseña de su cuenta'),

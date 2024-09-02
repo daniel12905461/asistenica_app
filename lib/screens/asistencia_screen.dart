@@ -141,13 +141,36 @@ class AsistenciaSreen extends StatelessWidget {
         ),
         floatingActionButton: Visibility(
           visible: true,
-          child: FloatingActionButton(
-            backgroundColor: Colors.lightBlue[800],
-            elevation: 0,
-            child: Icon(Icons.more_time),
-            onPressed: () async {
-              _takePicture(context, 'Registrar Hora de Asistencia', 2);
-            },
+          child: SizedBox(
+            width: 115, // Ajusta el ancho según sea necesario
+            // height: 80, // Ajusta la altura según sea necesario
+            child: FloatingActionButton(
+              backgroundColor: Colors.lightBlue[800],
+              elevation: 0,
+              onPressed: () async {
+                _takePicture(context, 'Registrar Hora de Asistencia', 2);
+              },
+              child: FittedBox(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.more_time,
+                      color: Colors.white, // Cambia el color del ícono a blanco
+                    ),
+                    SizedBox(height: 2), // Espacio entre el ícono y el texto
+                    Text(
+                      'Registrar Asistencia',
+                      style: TextStyle(
+                        color: Colors.white, // Cambia el color del texto a blanco
+                        fontSize: 10, // Reduce el tamaño del texto
+                      ),
+                      textAlign: TextAlign.center, // Alinea el texto en el centro
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
